@@ -257,6 +257,19 @@ fieldset[disabled] .btn-xl.active {
     }
 }
 
+.services-banner {
+    text-align: center;
+    color: #fff;
+    background-attachment: scroll;
+    background-image: url(../img/services-bg.jpg);
+    background-position: center bottom;
+    background-repeat: none;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
 header {
     text-align: center;
     color: #fff;
@@ -868,4 +881,14 @@ section#about {
 }
 #header-banner {
     min-height: 900px;
+}
+#services-banner {
+    min-height: 400px;
+    margin-top: -35px;
+}
+.more-space-lg {
+    margin-top: 60px;
+}
+.more-space {
+    margin-top: 40px;
 }
