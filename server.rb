@@ -9,5 +9,4 @@ get '/services' do
 end
 
 post '/mail/contact_me.php' do
-  File.read(File.join('public', 'mail', 'contact_me.php'))
 end
