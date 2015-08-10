@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'pony'
 
 get '/' do
   File.read(File.join('public', 'index.html'))
@@ -8,5 +9,5 @@ get '/services' do
   File.read(File.join('public', 'services.html'))
 end
 
-post '/mail/contact_me.php' do
+post '/send' do
 end
