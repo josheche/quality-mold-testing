@@ -895,3 +895,10 @@ section#whatwedo {
 section#services {
   background-color: rgb(247, 247, 247);
 }
+.services-img {
+  max-height:200px;
+}
+.section-margin {
+  margin-top: 35px;
+  margin-bottom: 25px;
+}
