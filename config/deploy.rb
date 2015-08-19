@@ -55,12 +55,26 @@ set :keep_releases, 5
 
 namespace :deploy do
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      invoke 'unicorn:restart'
+      invoke 'nginx:restart'
+    end
+  end
+ 
+  after :publishing, :restart
+
+end
+
+namespace :server do
+
+  desc 'Setup Server'
+  task :setup do
+    on roles(:app), in: :sequence do
+      invoke "nginx:site:add"
+      invoke "nginx:site:enable"
+      invoke "deploy:restart"
     end
   end
 
