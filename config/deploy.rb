@@ -50,6 +50,8 @@ set :nginx_template, "#{stage_config_path}/nginx.conf.erb"
 set :app_server, true
 set :app_server_socket, "/tmp/unicorn-#{fetch :application}.socket"
 
+set :nginx_domains, "104.131.96.70"
+
 # Default value for keep_releases is 5
 set :keep_releases, 5
 

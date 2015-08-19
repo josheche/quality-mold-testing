@@ -11,10 +11,18 @@ upstream <%= fetch(:application) %>-app-server {
 
 # HTTP Server
 
+<% if fetch(:nginx_redirected_domains) %>
+server {
+  listen 80;
+  server_name <%= fetch(:nginx_redirected_domains) %>;
+  rewrite ^(.*) http://<%= fetch(:nginx_domains).gsub(/\s.*/,'') %> permanent;
+}
+<% end %>
+
 <% if fetch(:nginx_use_ssl) %>
 server {
   listen 80;
-  listen [::]:80 ipv6only=on;
+  server_name <%= fetch(:nginx_domains) %>;
   rewrite ^(.*) https://$host$1 permanent;
 }
 <% end %>
@@ -24,14 +32,14 @@ server {
 <% if fetch(:nginx_use_ssl) %>
   listen 443;
   ssl on;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
   ssl_certificate <%= fetch(:nginx_ssl_certificate_path) %>/<%= fetch(:nginx_ssl_certificate) %>;
   ssl_certificate_key <%= fetch(:nginx_ssl_certificate_key_path) %>/<%= fetch(:nginx_ssl_certificate_key) %>;
 <% else %>
   listen 80;
-  listen [::]:80 ipv6only=on;
 <% end %>
 
-  server_name localhost;
+  server_name <%= fetch(:nginx_domains) %>;
   root        <%= fetch(:deploy_to) %>/current/<%= fetch(:nginx_static_dir) %>;
 
   access_log <%= fetch(:nginx_log_path) %>/nginx-access.log;
@@ -62,6 +70,9 @@ server {
     proxy_set_header Host $http_host;
   <% if fetch(:nginx_use_ssl) %>
     proxy_set_header X-Forwarded-Proto https;
+  <% end %>
+  <% if fetch(:nginx_read_timeout) %>
+    proxy_read_timeout <%= fetch(:nginx_read_timeout) %>;
   <% end %>
     proxy_redirect off;
     proxy_pass http://<%= fetch(:application) %>-app-server;
