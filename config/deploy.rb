@@ -52,6 +52,8 @@ set :app_server_socket, "/tmp/unicorn-#{fetch :application}.socket"
 
 set :nginx_domains, "qualitymoldtest.com"
 
+set :nginx_redirected_domains, "www.qualitymoldtest.com"
+
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
