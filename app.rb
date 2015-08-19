@@ -1,11 +1,38 @@
 class App < Sinatra::Base
+  set :root, File.dirname(__FILE__) # You must set app root
+
+  register Sinatra::AssetPack
+
+  assets {
+    serve '/js',     from: 'app/assets/javascripts'
+    serve '/css',    from: 'app/assets/stylesheets'
+    serve '/img', from: 'app/assets/images'
+
+    css :application, '/css/application.css', [
+      '/css/bootstrap.css',
+      '/css/mold.css'
+    ]
+
+    js :app, '/js/app.js', [
+      '/js/jquery.js',
+      '/js/bootstrap.js',
+      '/js/classie.js',
+      '/js/cbpAnimatedHeader.js',
+      '/js/jqBootstrapValidation.js',
+      '/js/contact_me.js',
+      '/js/mold.js'
+    ]
+
+    css_compression :simple
+    js_compression  :jsmin
+  }
 
   get '/' do
-    File.read(File.join('public', 'index.html'))
+    erb :home
   end
 
   get '/services' do
-    File.read(File.join('public', 'services.html'))
+    #File.read(File.join('public', 'services.html'))
   end
 
   post '/send' do
