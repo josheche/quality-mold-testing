@@ -32,7 +32,7 @@ class App < Sinatra::Base
   end
 
   get '/services' do
-    #File.read(File.join('public', 'services.html'))
+    erb :service
   end
 
   post '/send' do
